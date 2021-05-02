@@ -1,5 +1,5 @@
 import React from "react";
-import './index.css';
+import "./index.css";
 
 const NUMBER_OF_STRINGS = 6;
 

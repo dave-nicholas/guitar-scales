@@ -9,7 +9,7 @@ export const FretBoard = () => {
   const frets = [];
 
   for (let i = 1; i <= NUMBER_OF_FRETS; i++) {
-    frets.push(<Fret number={i}/>);
+    frets.push(<Fret number={i} />);
   }
 
   return (
