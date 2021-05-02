@@ -1,7 +1,7 @@
 .fretboard {
-  display: grid;
-  width: 100%;
-  grid-template-columns: 1fr 0.9fr 0.8fr 0.8fr 0.8fr 0.7fr 0.7fr 0.7fr 0.6fr 0.6fr 0.6fr 0.5fr 0.4fr 0.4fr 0.4fr 0.3fr 0.3fr 0.3fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr;
-  grid-template-rows: 500px;
-  grid-gap: 0.5rem;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 0.2fr 0.9fr 0.8fr 0.8fr 0.8fr 0.7fr 0.7fr 0.7fr 0.6fr 0.6fr 0.6fr 0.5fr 0.4fr 0.4fr 0.4fr 0.3fr 0.3fr 0.3fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr;
+    grid-template-rows: 500px;
+    grid-gap: 0.5rem;
 }
