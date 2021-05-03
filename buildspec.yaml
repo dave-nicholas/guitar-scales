@@ -9,7 +9,7 @@ phases:
       - ~/.yarn/bin/yarn --ignore-engines
   build:
     commands:
-      - ~/.yarn/bin/yarn prod
+      - ~/.yarn/bin/yarn build
   post_build:
     commands:
       - echo "******** Uploading to S3 ********"
