@@ -13,5 +13,5 @@ phases:
   post_build:
     commands:
       - echo "******** Uploading to S3 ********"
-      - aws s3 sync public/ s3://guitar-scales
-      - aws s3 cp public/index.html s3://guitar-scales/index.html --cache-control max-age=0
+      - aws s3 sync build/ s3://guitar-scales
+      - aws s3 cp build/index.html s3://guitar-scales/index.html --cache-control max-age=0
