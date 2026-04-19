@@ -2,7 +2,7 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     color: #fff;
     border-radius: 4px;
-    border: 6px solid #171717;
+    border: 6px solid #000;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -12,21 +12,21 @@
 }
 
 .fret--normal {
-    background-color: #1eaafc;
+    background-color: #0a3a5e;
     background-image: linear-gradient(
         130deg,
-        #6c52d9 0%,
-        #1eaafc 85%,
-        #3edfd7 100%
+        #1a1a2e 0%,
+        #0a3a5e 85%,
+        #16213e 100%
     );
 }
 
 .fret--single-dot {
-    background-color: #f4d03f;
-    background-image: linear-gradient(180deg, #f4d03f 0%, #16a085 100%);
+    background-color: #2d2d1f;
+    background-image: linear-gradient(180deg, #3d3d2a 0%, #1a1a0f 100%);
 }
 
 .fret--double-dot {
-    background-color: #f4d03f;
-    background-image: linear-gradient(0deg, #f4d03f 0%, #16a085 100%);
+    background-color: #2d2d1f;
+    background-image: linear-gradient(0deg, #3d3d2a 0%, #1a1a0f 100%);
 }

@@ -1,0 +1,96 @@
+.scale-table {
+    margin-top: 40px;
+    padding: 20px;
+    border-top: 2px solid #ccc;
+}
+
+.scale-table h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.scale-table table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 400px;
+}
+
+.scale-table th,
+.scale-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.scale-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    color: #333;
+}
+
+.scale-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.scale-table tr:hover {
+    background-color: #ffe8cc;
+    cursor: pointer;
+}
+
+.scale-note {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+
+.chord-notes {
+    display: flex;
+    gap: 8px;
+}
+
+.chord-note {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.chord-degree-1 {
+    background-color: #ffe53b;
+    color: #000;
+}
+
+.chord-degree-2 {
+    background-color: #87ceeb;
+    color: #000;
+}
+
+.chord-degree-3 {
+    background-color: #90ee90;
+    color: #000;
+}
+
+.chord-type {
+    font-weight: bold;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.chord-type--major {
+    background-color: #4eb3f5;
+    color: #000;
+}
+
+.chord-type--minor {
+    background-color: #f5994e;
+    color: #000;
+}
+
+.chord-type--unknown {
+    background-color: #cccccc;
+    color: #333;
+}

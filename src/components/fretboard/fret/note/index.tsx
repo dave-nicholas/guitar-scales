@@ -1,8 +1,7 @@
-// eslint-disable-next-line
-import react, { useContext } from 'react';
+import { useContext } from 'react';
 import ClassNames from 'classnames';
 import { DataContext } from '../../../../data/provider';
-import { addNoteAction, removeNoteAction } from '../../../../data/reducer';
+import { addNoteAction, removeNoteAction, ScaleType } from '../../../../data/reducer';
 import './index.css';
 
 interface Props {
@@ -21,6 +20,15 @@ const stringOffSet = [
     7, //E
 ];
 
+const getScaleDegree = (noteIndex: number, rootIndex: number, scaleType: ScaleType): number => {
+    const majorIntervals = [0, 2, 4, 5, 7, 9, 11];
+    const minorIntervals = [0, 2, 3, 5, 7, 8, 10];
+    const intervals = scaleType === 'major' ? majorIntervals : minorIntervals;
+    const semitoneDiff = (noteIndex - rootIndex + 12) % 12;
+    const degreeIndex = intervals.indexOf(semitoneDiff);
+    return degreeIndex !== -1 ? degreeIndex + 1 : -1;
+};
+
 export const Note = ({ fret, string }: Props) => {
     const cxt = useContext(DataContext);
 
@@ -28,10 +36,23 @@ export const Note = ({ fret, string }: Props) => {
 
     const note = notes[noteIndex];
     const selected = cxt?.state.selectedNotes.includes(note);
+    const rootNote = cxt?.state.rootNote || null;
+    const scaleType = cxt?.state.scaleType || 'major';
+    const hoveredChord = cxt?.state.hoveredChord || [];
+    const isRoot = selected && rootNote === note;
+    const isHoveredChordNote = hoveredChord.includes(note);
+    
+    let scaleDegree = -1;
+    if (selected && rootNote) {
+        const rootIndex = notes.indexOf(rootNote);
+        scaleDegree = getScaleDegree(noteIndex, rootIndex, scaleType);
+    }
 
     const classes = ClassNames({
         note: true,
         'note--selected': selected,
+        'note--root': isRoot,
+        'note--hovered': isHoveredChordNote,
     });
 
     const actionToDispatch = () => {
@@ -44,7 +65,8 @@ export const Note = ({ fret, string }: Props) => {
 
     return (
         <div className={classes} onClick={() => actionToDispatch()}>
-            {note}
+            <span className="note__name">{note}</span>
+            {scaleDegree > 0 && <span className="note__degree">{scaleDegree}</span>}
         </div>
     );
 };

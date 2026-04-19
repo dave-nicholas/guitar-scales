@@ -1,11 +1,11 @@
-import React, { useReducer } from 'react';
+import { useReducer, ReactNode, createContext, Dispatch } from 'react';
 import { reducer, initialState, Actions, Store } from './reducer';
 
-export const DataContext = React.createContext<
-    { state: Store; dispatch: React.Dispatch<Actions> } | undefined
+export const DataContext = createContext<
+    { state: Store; dispatch: Dispatch<Actions> } | undefined
 >(undefined);
 
-export const Provider: React.FunctionComponent = ({ children }) => {
+export const Provider = ({ children }: { children: ReactNode }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     return (
