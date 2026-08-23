@@ -38,6 +38,10 @@
     cursor: pointer;
 }
 
+.scale-table tr.scale-table__row--selected {
+    background-color: #fff3b0;
+}
+
 .scale-note {
     font-weight: bold;
     font-size: 18px;
@@ -87,6 +91,16 @@
 
 .chord-type--minor {
     background-color: #f5994e;
+    color: #000;
+}
+
+.chord-type--diminished {
+    background-color: #b388ff;
+    color: #fff;
+}
+
+.chord-type--augmented {
+    background-color: #ff8a80;
     color: #000;
 }
 

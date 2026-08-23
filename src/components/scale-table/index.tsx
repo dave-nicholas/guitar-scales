@@ -1,6 +1,6 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { DataContext } from '../../data/provider';
-import { setHoveredChordAction, clearHoveredChordAction } from '../../data/reducer';
+import { clearSelectedTriadAction, setSelectedTriadAction } from '../../data/reducer';
 import './index.css';
 
 const notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
@@ -30,23 +30,40 @@ const getTriadForScaleDegree = (scaleNotes: string[], degreeIndex: number): stri
     return [root, third, fifth];
 };
 
-const getChordQuality = (root: string, third: string): 'major' | 'minor' | 'unknown' => {
+const getChordQuality = (
+    root: string,
+    third: string,
+    fifth: string,
+): 'major' | 'minor' | 'diminished' | 'augmented' | 'unknown' => {
     const rootIndex = notes.indexOf(root);
-    const thirdIndex = notes.indexOf(third);
-    
-    const semitoneDiff = (thirdIndex - rootIndex + 12) % 12;
-    
-    if (semitoneDiff === 4) return 'major';
-    if (semitoneDiff === 3) return 'minor';
+    const thirdInterval = (notes.indexOf(third) - rootIndex + 12) % 12;
+    const fifthInterval = (notes.indexOf(fifth) - rootIndex + 12) % 12;
+
+    if (thirdInterval === 4 && fifthInterval === 7) return 'major';
+    if (thirdInterval === 3 && fifthInterval === 7) return 'minor';
+    if (thirdInterval === 3 && fifthInterval === 6) return 'diminished';
+    if (thirdInterval === 4 && fifthInterval === 8) return 'augmented';
     return 'unknown';
 };
 
 export const ScaleTable = () => {
     const cxt = useContext(DataContext);
+    const tableRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const clearTriadWhenClickingOutside = (event: MouseEvent) => {
+            if (tableRef.current && !tableRef.current.contains(event.target as Node)) {
+                cxt?.dispatch(clearSelectedTriadAction());
+            }
+        };
+
+        document.addEventListener('click', clearTriadWhenClickingOutside);
+        return () => document.removeEventListener('click', clearTriadWhenClickingOutside);
+    }, [cxt]);
 
     if (!cxt?.state.rootNote) {
         return (
-            <div className="scale-table">
+            <div className="scale-table" ref={tableRef}>
                 <p>Select a root note to see the scale</p>
             </div>
         );
@@ -54,18 +71,19 @@ export const ScaleTable = () => {
 
     const scaleNotes = getScaleNotes(cxt.state.rootNote, cxt.state.scaleType);
     const triads = scaleNotes.map((_, index) => getTriadForScaleDegree(scaleNotes, index));
-    const chordQualities = triads.map((triad) => getChordQuality(triad[0], triad[1]));
+    const chordQualities = triads.map(([root, third, fifth]) => getChordQuality(root, third, fifth));
 
-    const handleRowHover = (triad: string[]) => {
-        cxt?.dispatch(setHoveredChordAction(triad));
-    };
+    const handleTriadClick = (triad: string[]) => {
+        if (cxt?.state.selectedTriad?.[0] === triad[0]) {
+            cxt.dispatch(clearSelectedTriadAction());
+            return;
+        }
 
-    const handleRowLeave = () => {
-        cxt?.dispatch(clearHoveredChordAction());
+        cxt?.dispatch(setSelectedTriadAction(triad));
     };
 
     return (
-        <div className="scale-table">
+        <div className="scale-table" ref={tableRef}>
             <h3>{cxt.state.rootNote} {cxt.state.scaleType.charAt(0).toUpperCase() + cxt.state.scaleType.slice(1)} Scale</h3>
             <table>
                 <thead>
@@ -79,8 +97,8 @@ export const ScaleTable = () => {
                     {scaleNotes.map((note, index) => (
                         <tr 
                             key={`${note}-${index}`}
-                            onMouseEnter={() => handleRowHover(triads[index])}
-                            onMouseLeave={handleRowLeave}
+                            onClick={() => handleTriadClick(triads[index])}
+                            className={cxt.state.selectedTriad?.[0] === triads[index][0] ? 'scale-table__row--selected' : undefined}
                         >
                             <td className="scale-note">{note}</td>
                             <td className="chord-notes">

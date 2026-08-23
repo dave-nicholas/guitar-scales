@@ -49,11 +49,33 @@
     box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
 }
 
-.note--hovered {
-    background-color: #ff1493;
-    background-image: linear-gradient(147deg, #ff1493 0%, #ff0080 100%);
-    box-shadow: 0 0 25px rgba(255, 20, 147, 1), inset 0 0 10px rgba(255, 255, 255, 0.5);
+.note--triad-root {
+    background-color: #ffe53b;
+    background-image: linear-gradient(147deg, #ffe53b 0%, #ffb300 100%);
+    box-shadow: 0 0 20px rgba(255, 229, 59, 0.9), inset 0 0 10px rgba(255, 255, 255, 0.5);
     border: 3px solid #ffff00;
     transform: scale(1.15);
     z-index: 10;
+}
+
+.note--triad-third {
+    background-color: #87ceeb;
+    background-image: linear-gradient(147deg, #87ceeb 0%, #2196f3 100%);
+    box-shadow: 0 0 20px rgba(33, 150, 243, 0.9), inset 0 0 10px rgba(255, 255, 255, 0.5);
+    border: 3px solid #d9f4ff;
+    transform: scale(1.15);
+    z-index: 10;
+}
+
+.note--triad-fifth {
+    background-color: #90ee90;
+    background-image: linear-gradient(147deg, #90ee90 0%, #21a65a 100%);
+    box-shadow: 0 0 20px rgba(33, 166, 90, 0.9), inset 0 0 10px rgba(255, 255, 255, 0.5);
+    border: 3px solid #d8ffd8;
+    transform: scale(1.15);
+    z-index: 10;
+}
+
+.note--triad-dimmed {
+    opacity: 0.2;
 }

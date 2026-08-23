@@ -38,9 +38,10 @@ export const Note = ({ fret, string }: Props) => {
     const selected = cxt?.state.selectedNotes.includes(note);
     const rootNote = cxt?.state.rootNote || null;
     const scaleType = cxt?.state.scaleType || 'major';
-    const hoveredChord = cxt?.state.hoveredChord || [];
+    const selectedTriad = cxt?.state.selectedTriad || [];
     const isRoot = selected && rootNote === note;
-    const isHoveredChordNote = hoveredChord.includes(note);
+    const triadDegree = selectedTriad.indexOf(note) + 1;
+    const isDimmedByTriad = selectedTriad.length > 0 && triadDegree === 0;
     
     let scaleDegree = -1;
     if (selected && rootNote) {
@@ -52,7 +53,10 @@ export const Note = ({ fret, string }: Props) => {
         note: true,
         'note--selected': selected,
         'note--root': isRoot,
-        'note--hovered': isHoveredChordNote,
+        'note--triad-root': triadDegree === 1,
+        'note--triad-third': triadDegree === 2,
+        'note--triad-fifth': triadDegree === 3,
+        'note--triad-dimmed': isDimmedByTriad,
     });
 
     const actionToDispatch = () => {

@@ -4,14 +4,14 @@ export interface Store {
     selectedNotes: Array<string>;
     rootNote: string | null;
     scaleType: ScaleType;
-    hoveredChord: string[] | null;
+    selectedTriad: string[] | null;
 }
 
 export const initialState: Store = {
     selectedNotes: [],
     rootNote: null,
     scaleType: 'major',
-    hoveredChord: null,
+    selectedTriad: null,
 };
 
 const notes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
@@ -38,8 +38,8 @@ export const ADD_NOTE = 'ADD_NOTE';
 export const REMOVE_NOTE = 'REMOVE_NOTE';
 export const CLEAR_STATE = 'CLEAR_STATE';
 export const SET_SCALE_TYPE = 'SET_SCALE_TYPE';
-export const SET_HOVERED_CHORD = 'SET_HOVERED_CHORD';
-export const CLEAR_HOVERED_CHORD = 'CLEAR_HOVERED_CHORD';
+export const SET_SELECTED_TRIAD = 'SET_SELECTED_TRIAD';
+export const CLEAR_SELECTED_TRIAD = 'CLEAR_SELECTED_TRIAD';
 
 export const addNoteAction = (note: string) => ({
     type: ADD_NOTE,
@@ -60,13 +60,13 @@ export const setScaleTypeAction = (scaleType: ScaleType) => ({
     payload: { scaleType },
 });
 
-export const setHoveredChordAction = (chord: string[]) => ({
-    type: SET_HOVERED_CHORD,
-    payload: { chord },
+export const setSelectedTriadAction = (triad: string[]) => ({
+    type: SET_SELECTED_TRIAD,
+    payload: { triad },
 });
 
-export const clearHoveredChordAction = () => ({
-    type: CLEAR_HOVERED_CHORD,
+export const clearSelectedTriadAction = () => ({
+    type: CLEAR_SELECTED_TRIAD,
 });
 
 export type Actions =
@@ -74,8 +74,8 @@ export type Actions =
     | ReturnType<typeof removeNoteAction>
     | ReturnType<typeof clearStateAction>
     | ReturnType<typeof setScaleTypeAction>
-    | ReturnType<typeof setHoveredChordAction>
-    | ReturnType<typeof clearHoveredChordAction>;
+    | ReturnType<typeof setSelectedTriadAction>
+    | ReturnType<typeof clearSelectedTriadAction>;
 
 export const reducer = (state = initialState, action: Actions): Store => {
     switch (action.type) {
@@ -91,6 +91,7 @@ export const reducer = (state = initialState, action: Actions): Store => {
                     ...state,
                     selectedNotes: scaleNotes,
                     rootNote: newNote,
+                    selectedTriad: null,
                 };
             } else {
                 // Otherwise, just add the note if not already selected
@@ -128,6 +129,7 @@ export const reducer = (state = initialState, action: Actions): Store => {
                     ...state,
                     scaleType: newScaleType,
                     selectedNotes: scaleNotes,
+                    selectedTriad: null,
                 };
             }
             
@@ -136,17 +138,17 @@ export const reducer = (state = initialState, action: Actions): Store => {
                 scaleType: newScaleType,
             };
         }
-        case SET_HOVERED_CHORD: {
-            const chordAction = action as ReturnType<typeof setHoveredChordAction>;
+        case SET_SELECTED_TRIAD: {
+            const triadAction = action as ReturnType<typeof setSelectedTriadAction>;
             return {
                 ...state,
-                hoveredChord: chordAction.payload.chord,
+                selectedTriad: triadAction.payload.triad,
             };
         }
-        case CLEAR_HOVERED_CHORD:
+        case CLEAR_SELECTED_TRIAD:
             return {
                 ...state,
-                hoveredChord: null,
+                selectedTriad: null,
             };
         default:
             return state;
